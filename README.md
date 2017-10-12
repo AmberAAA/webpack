@@ -120,4 +120,41 @@ document.body.appendChild(component());
 ``` shell
 $ webpack
 ```
+### Demo5 加载CSS文件
+1. 安装插件
+```shell
+$ npm i --save-dev style-loader css-loader
+```
+2. 适配webpack配置文件
+```js
+let path = require('path');
+module.exports = {
+  entry:'./src/main.js',
+  output:{
+    filename:'index.js',
+    path:path.resolve(__dirname,'dist')
+  }
+  //新增部分
+  module:{
+    loader:[
+      {
+        test:/\.css$/,
+        use:['style-loader','css-loader']
+      }
+    ]
+  }
+}
+```
+>webpack 根据正则表达式，来确定应该查找哪些文件，并将其提供给指定的 loader。在这种情况下，以 .css 结尾的全部文件，都将被提供给 style-loader 和 css-loader。
+
+3. 创建一个样式文件
+```css
+//  src/index.css
+.hello {
+  background: #333333;
+}
+```
+
+4. 在入口文件中引用css文件
+
 
