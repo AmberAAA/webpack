@@ -156,5 +156,49 @@ module.exports = {
 ```
 
 4. 在入口文件中引用css文件
+```js
+import './index.css'
+```
 
+5. webpack打包
+```shell
+$ webpack
+```
 
+### Demo6 第一个插件HtmlWebpackPlugin
+好像还有点不方便，dist下的所有的文件并不是自动生成的，我们需要手动在/dist/下创建一个index.html目录，并且还要手动加载打包好的js，确实不够优雅。而HtmlWebpackPlugin可以帮助我们在生产新的index.html文件，并帮我我们完成替换。
+
+1. 安装插件
+```shell
+$ npm install --save-dev html-webpack-plugin
+```
+
+2. 适配插件
+```js
+let path = require('path');
+module.exports = {
+  entry:'./src/main.js',
+  //开始适配插件
+  plugins:[
+    new HtmlWebpackPlugin({
+      title:'demo6'
+    })
+  ],
+  //结束适配插件
+  output:{
+    filename:'index.js',
+    path:path.resolve(__dirname,'dist')
+  },
+  module:{
+    loaders:[{
+      test:/\.css$/,
+      use:['style-loader','css-loader']
+    }]
+  }
+}
+```
+
+3. 打包
+```shell
+$ webpack
+```
